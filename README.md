@@ -1,7 +1,7 @@
 vue
 ===
 
-GopherJS bindings for Vue.js 
+GopherJS bindings for Vue.js
 
-not yet published, stay tuned !
+will be done after Vue 1.0, stay tuned !
 
