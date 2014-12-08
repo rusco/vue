@@ -1,7 +1,7 @@
 vue
 ===
 
-GopherJS bindings for Vue.js
+Vue.js TodoMVC App - ported to GopherJS.
 
-will be done after Vue 1.0, stay tuned !
+Uses only the GopherJS js-Package to interface with Javascript.
 
