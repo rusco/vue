@@ -14,25 +14,36 @@ const (
 	EDITEDTODO = "editedTodo"
 )
 
+var (
+	console      = js.Global.Get("console")
+	json         = js.Global.Get("JSON")
+	localStorage = js.Global.Get("localStorage")
+	vue          = js.Global.Get("Vue")
+	router       = js.Global.Get("Router")
+)
+
+// storage package
 func Save(val interface{}) {
-	jsonStr := js.Global.Get("JSON").Call("stringify", val)
-	js.Global.Get("localStorage").Call("setItem", STORAGE_KEY, jsonStr)
+	jsonStr := json.Call("stringify", val)
+	localStorage.Call("setItem", STORAGE_KEY, jsonStr)
 }
 func Fetch() js.Object {
 
-	item := js.Global.Get("localStorage").Call("getItem", STORAGE_KEY)
+	item := localStorage.Call("getItem", STORAGE_KEY)
 	if item.IsNull() {
 		return nil
 	}
-	obj := js.Global.Get("JSON").Call("parse", item)
+	obj := json.Call("parse", item)
 	return obj
 }
 
+//utility package
 func log(val ...interface{}) {
-	js.Global.Get("console").Call("log", val...)
+	console.Call("log", val...)
 }
 
 func init() {
+
 	if Fetch() == nil {
 		Save(js.S{js.M{TITLE: "Program in Gopher.js", COMPLETED: false}, js.M{TITLE: "Finish another TodoMvc Sample", COMPLETED: true}})
 	}
@@ -155,10 +166,11 @@ func main() {
 		},
 	}
 
-	vue := js.Global.Get("Vue").New(app)
+	vue := vue.New(app)
 	js.Global.Set("app", vue)
 
-	router := js.Global.Get("Router").New()
+	//router package:
+	router := router.New()
 	keys := js.Global.Get("Object").Call("keys", vue.Get("filters"))
 	keys.Call("forEach", func(filter js.Object) {
 		router.Call("on", filter, func() {
